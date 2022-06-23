@@ -8,8 +8,9 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 @SpringBootApplication
 public class HorizonApplication {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		SpringApplication.run(HorizonApplication.class, args);
+
 	}
 
 }

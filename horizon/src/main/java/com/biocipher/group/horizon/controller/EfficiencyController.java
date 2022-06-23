@@ -1,5 +1,6 @@
 package com.biocipher.group.horizon.controller;
 import com.biocipher.group.horizon.model.BaseResponse;
+import com.biocipher.group.horizon.model.EfficiencyResponse;
 import com.biocipher.group.horizon.model.sql.Efficiency;
 import com.biocipher.group.horizon.service.EfficiencyService;
 import com.biocipher.group.horizon.util.ApplicationException;
@@ -31,6 +32,30 @@ public class EfficiencyController {
             LOGGER.error(e.getMessage());
             throw new ApplicationException(e.getMessage());
         }
+    }
+
+    @RequestMapping(value="effGet/{id}", method = RequestMethod.GET)
+
+    public ResponseEntity<EfficiencyResponse>  getEfficiencyData(@PathVariable("id") int id) {
+        try {
+            return efficiencySrvc.fetchEfficiencyByID(id);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw new ApplicationException(e.getMessage());
+        }
+    }
+
+
+        @RequestMapping(value="/efficiencyGet", method = RequestMethod.GET)
+                public ResponseEntity<EfficiencyResponse> getEfficiency(@RequestParam("id") int id) {
+                try {
+                        return efficiencySrvc.fetchEfficiency(id);
+                }
+                catch (Exception e){
+                    LOGGER.error(e.getMessage());
+                    throw new ApplicationException(e.getMessage());
+        }
+
     }
 
 

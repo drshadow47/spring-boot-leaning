@@ -1,6 +1,8 @@
 package com.biocipher.group.horizon.service.impl;
 
+import com.biocipher.group.horizon.dto.EfficiencyDto;
 import com.biocipher.group.horizon.model.BaseResponse;
+import com.biocipher.group.horizon.model.EfficiencyResponse;
 import com.biocipher.group.horizon.model.sql.Efficiency;
 import com.biocipher.group.horizon.repository.EfficiencyRepo;
 import com.biocipher.group.horizon.service.EfficiencyService;
@@ -12,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EfficiencySrvcimpl implements EfficiencyService {
@@ -53,6 +58,42 @@ public class EfficiencySrvcimpl implements EfficiencyService {
         }
     }
 
+    @Override
+    public ResponseEntity<EfficiencyResponse> fetchEfficiencyByID(int id) {
+
+        try{
+            EfficiencyResponse res=new EfficiencyResponse();
+            HttpStatus httpStatus =HttpStatus.OK;
+            Optional<Efficiency> optional =efficiencyRepo.findById(id);
+
+            if(optional.isPresent()) {
+                res.setEfficiencyData(optional.get());
+                res.setMessage(Constants.SUCCESS_MSG);
+                res.setResponseCode(Constants.SUCESS_CD);
+            }
+                return ResponseEntity.status(httpStatus).body(res);
+        }
+        catch(Exception e){
+            LOGGER.error(e.getMessage());
+            throw new ApplicationException(e.getMessage());
+        }
+
+    }
+
+    @Override
+    public ResponseEntity<EfficiencyResponse> fetchEfficiency(int id) {
+
+        EfficiencyResponse res=new EfficiencyResponse();
+        HttpStatus httpStatus =HttpStatus.OK;
+        Optional<Efficiency> optional =efficiencyRepo.findById(id);
+
+        if(optional.isPresent()) {
+            res.setEfficiencyData(optional.get());
+            res.setMessage(Constants.SUCCESS_MSG);
+            res.setResponseCode(Constants.SUCESS_CD);
+        }
+        return ResponseEntity.status(httpStatus).body(res);
+    }
 
 
 }
