@@ -11,7 +11,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;;
 import org.springframework.web.bind.annotation.*;
 
-
+/**
+ * Author : Sanjeev Kumar ( Dr Shadow)
+ */
 @RestController
 
 @RequestMapping(value = "/secure",produces = MediaType.APPLICATION_JSON_VALUE)
@@ -23,7 +25,6 @@ public class EfficiencyController {
     EfficiencyService efficiencySrvc;
 
     /**
-     *
      *         * RequestMethod  :  POST
      *         * Description :  Api  For Post  Efficiency Details Saved in Db
      *         * endPoint : "/efficiency"
@@ -31,6 +32,7 @@ public class EfficiencyController {
      * @return
      */
     @RequestMapping(value = "/efficiency", method = RequestMethod.POST)
+
     public ResponseEntity<BaseResponse> saveEfficiency(@RequestBody Efficiency efficiencyReq){
         try {
          System.out.print("Request:::::::"+efficiencyReq.getCustomerId()+
@@ -41,7 +43,6 @@ public class EfficiencyController {
             throw new ApplicationException(e.getMessage());
         }
     }
-
     /**
      *      *
      *      * RequestMethod  :  Get
@@ -51,7 +52,6 @@ public class EfficiencyController {
      * @param id
      * @return
      */
-
     @RequestMapping(value="/effGet/{id}", method = RequestMethod.GET)
 
     public ResponseEntity<EfficiencyResponse>  getEfficiencyData(@PathVariable("id") int id) {
@@ -62,7 +62,6 @@ public class EfficiencyController {
             throw new ApplicationException(e.getMessage());
         }
     }
-
     /**
      *
      * RequestMethod  :  Get
@@ -82,12 +81,5 @@ public class EfficiencyController {
                     LOGGER.error(e.getMessage());
                     throw new ApplicationException(e.getMessage());
         }
-
     }
-
-
-
-
-
-
 }

@@ -8,6 +8,7 @@ import com.biocipher.group.horizon.repository.EfficiencyRepo;
 import com.biocipher.group.horizon.service.EfficiencyService;
 import com.biocipher.group.horizon.util.ApplicationException;
 import com.biocipher.group.horizon.util.Constants;
+import com.biocipher.group.horizon.util.RedisCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class EfficiencySrvcimpl implements EfficiencyService {
 
     @Override
     public ResponseEntity<BaseResponse> saveEffi(Efficiency efficiency) {
-
+        RedisCache redisCache = new RedisCache();
         BaseResponse res = new BaseResponse();
         HttpStatus httpStatus = HttpStatus.OK;
         try {
@@ -50,6 +51,7 @@ public class EfficiencySrvcimpl implements EfficiencyService {
             res.setMessage(Constants.SUCCESS_MSG);
             res.setResponseCode(Constants.SUCESS_CD);
             efficiencyRepo.save(svEfficiency);
+            redisCache.setCache(HASH_KEY,svEfficiency);
             return ResponseEntity.status(httpStatus).body(res);
         }
         catch(Exception e){
@@ -65,6 +67,7 @@ public class EfficiencySrvcimpl implements EfficiencyService {
             EfficiencyResponse res=new EfficiencyResponse();
             HttpStatus httpStatus =HttpStatus.OK;
             Optional<Efficiency> optional =efficiencyRepo.findById(id);
+
 
             if(optional.isPresent()) {
                 res.setEfficiencyData(optional.get());
@@ -82,11 +85,12 @@ public class EfficiencySrvcimpl implements EfficiencyService {
 
     @Override
     public ResponseEntity<EfficiencyResponse> fetchEfficiency(int id) {
-
+        RedisCache redisCache = new RedisCache();
         EfficiencyResponse res=new EfficiencyResponse();
         HttpStatus httpStatus =HttpStatus.OK;
         Optional<Efficiency> optional =efficiencyRepo.findById(id);
-
+        redisCache.setCache(HASH_KEY,optional);
+        System.out.print("Redis Return :: " +redisCache.getCache(HASH_KEY));
         if(optional.isPresent()) {
             res.setEfficiencyData(optional.get());
             res.setMessage(Constants.SUCCESS_MSG);
