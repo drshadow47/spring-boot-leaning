@@ -22,6 +22,14 @@ public class EfficiencyController {
     @Autowired
     EfficiencyService efficiencySrvc;
 
+    /**
+     *
+     *         * RequestMethod  :  POST
+     *         * Description :  Api  For Post  Efficiency Details Saved in Db
+     *         * endPoint : "/efficiency"
+     * @param efficiencyReq
+     * @return
+     */
     @RequestMapping(value = "/efficiency", method = RequestMethod.POST)
     public ResponseEntity<BaseResponse> saveEfficiency(@RequestBody Efficiency efficiencyReq){
         try {
@@ -34,7 +42,17 @@ public class EfficiencyController {
         }
     }
 
-    @RequestMapping(value="effGet/{id}", method = RequestMethod.GET)
+    /**
+     *      *
+     *      * RequestMethod  :  Get
+     *      *
+     *      * Description :  Api  For getting  Efficiency Details Saved in Db  by Id By Using Path Variable
+     *      * endPoint : "/effGet/{id}"
+     * @param id
+     * @return
+     */
+
+    @RequestMapping(value="/effGet/{id}", method = RequestMethod.GET)
 
     public ResponseEntity<EfficiencyResponse>  getEfficiencyData(@PathVariable("id") int id) {
         try {
@@ -45,7 +63,16 @@ public class EfficiencyController {
         }
     }
 
-
+    /**
+     *
+     * RequestMethod  :  Get
+     *
+     * Description :  Api  For getting  Efficiency Details Saved in Db  by Id By Using Request Parameter
+     * endPoint : "/efficiencyGet"
+     *
+     * @param id
+     * @return
+     */
         @RequestMapping(value="/efficiencyGet", method = RequestMethod.GET)
                 public ResponseEntity<EfficiencyResponse> getEfficiency(@RequestParam("id") int id) {
                 try {
